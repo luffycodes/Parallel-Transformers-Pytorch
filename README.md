@@ -1,10 +1,10 @@
 # Parallel Transformers Pytorch
 
-We provide the [weights](https://huggingface.co/luffycodes/Parallel-Roberta-Large) for the parallel attention and feedforward design for RoBERTa-Large.
+We provide the [weights](https://huggingface.co/luffycodes/Parallel-Roberta-Large) for the Parallel Attention and Feedforward design (PAF) for RoBERTa-Large.
 
 To use this model, use the following [paf_modeling_roberta.py](https://github.com/luffycodes/Parallel-Transformers-Pytorch/blob/main/paf_modeling_roberta.py) file.
 
-## Here is how to use this model to get the features of a given text in PyTorch:
+## Here is how to use this model to get the features of a given text in PyTorch
 
 ```python
 from transformers import RobertaTokenizer
@@ -16,11 +16,24 @@ encoded_input = tokenizer(text, return_tensors='pt')
 output = model(**encoded_input)
 ```
 
-## What is Parallel Attention and Feed-Forward Design (Figure on the right)
+## Efficient GPU implementation
+[gpu_paf_modeling_roberta.py](https://github.com/luffycodes/Parallel-Transformers-Pytorch/blob/main/gpu_paf_modeling_roberta.py) provides an efficient gpu implementation of PAF design for pytorch.
+
+It clubs the computation of key, query, value, and first feedforward network sub-layer(intermediate) computation into one.
+```
+self.kqv_ffn1.weight.data = torch.cat((attention.self.key.weight.data, attention.self.query.weight.data,
+                                               attention.self.value.weight.data,
+                                               intermediate.dense.weight.data))
+```          
+However, I could not efficiently optimize the second feedforward network sub-layer computation to run in parallel.
+
+## What is Parallel Attention and Feed-Forward Design?
 
 ![pfa (1)](https://github.com/luffycodes/Parallel-Transformers-Pytorch/assets/22951144/e5b76b1c-5fb1-4263-a23b-a61742fe12ae)
 
-## Evaluation results
+*On the left is the standard Series Attention and Feed-Forward Net Design (SAF) for transformers models. On the right is the Parallel Attention and Feed-Forward Net Design (PAF) used in transformer models like PaLM (Chowdhery et al., 2022) and Mesh-Transformers (Wang, 2021)*
+
+## Evaluation results of [PAF-RoBERTa-Large](https://huggingface.co/luffycodes/parallel-roberta-large).
 
 When fine-tuned on downstream tasks, this model achieves the following results:
 
