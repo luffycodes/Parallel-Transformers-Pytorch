@@ -1,8 +1,20 @@
 # Parallel Transformers Pytorch
 
-We provide the [weights](https://huggingface.co/luffycodes/parallel-roberta-large) for the parallel attention and feedforward design for Roberta-Large.
+We provide the [weights](https://huggingface.co/luffycodes/Parallel-Roberta-Large) for the parallel attention and feedforward design for Roberta-Large.
 
-To use this model, use the following [modeling_roberta.py](https://github.com/luffycodes/Parallel-Transformers-Pytorch/blob/main/paf_modeling_roberta.py) file.
+To use this model, use the following [paf_modeling_roberta.py](https://github.com/luffycodes/Parallel-Transformers-Pytorch/blob/main/paf_modeling_roberta.py) file.
+
+Here is how to use this model to get the features of a given text in PyTorch:
+
+```python
+from transformers import RobertaTokenizer
+from paf_modeling_roberta import RobertaModel
+tokenizer = RobertaTokenizer.from_pretrained('roberta-large')
+model = RobertaModel.from_pretrained('luffycodes/parallel-roberta-large')
+text = "Replace me by any text you'd like."
+encoded_input = tokenizer(text, return_tensors='pt')
+output = model(**encoded_input)
+```
 
 ![pfa (1)](https://github.com/luffycodes/Parallel-Transformers-Pytorch/assets/22951144/e5b76b1c-5fb1-4263-a23b-a61742fe12ae)
 
@@ -29,3 +41,4 @@ https://arxiv.org/abs/2305.13297
       primaryClass={cs.CL}
 }
 ```
+
