@@ -35,7 +35,7 @@ However, I could not efficiently optimize the second feedforward network sub-lay
 
 *On the left is the standard Series Attention and Feed-Forward Net Design (SAF) for transformers models. On the right is the Parallel Attention and Feed-Forward Net Design (PAF) used in transformer models like PaLM (Chowdhery et al., 2022) and Mesh-Transformers (Wang, 2021)*
 
-## Evaluation results of [PAF-RoBERTa-Large](https://huggingface.co/luffycodes/parallel-roberta-large).
+## Evaluation results of [PAF-RoBERTa-Large](https://huggingface.co/luffycodes/parallel-roberta-large)
 
 When fine-tuned on downstream tasks, this model achieves the following results:
 
