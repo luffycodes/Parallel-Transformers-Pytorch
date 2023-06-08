@@ -45,6 +45,9 @@ Glue test results:
 |:----:|:----:|:----:|:----:|:-----:|:----:|:-----:|:----:|:----:|
 |      | 89.3 | 91.7 | 94.3 | 96.2  | 64.0 | 91.0  | 90.4 | 80.1 |
 
+
+## Citation
+
 If you use this work, please cite:
 Investigating the Role of Feed-Forward Networks in Transformers Using Parallel Attention and Feed-Forward Net Design:
 https://arxiv.org/abs/2305.13297
