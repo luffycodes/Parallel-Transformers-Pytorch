@@ -29,6 +29,9 @@ self.kqv_ffn1.weight.data = torch.cat((attention.self.key.weight.data, attention
 ```          
 However, I could not efficiently optimize the second feedforward network sub-layer computation to run in parallel.
 
+Note that the output of first intermediate sub-layer of FFNs is sparse as shown by [paper](https://arxiv.org/abs/2210.06313).
+Hence, one can exploit that sparsity to make second intermediate sub-layer of FFNs faster (if it is not able to run in parallel).
+
 ## What is Parallel Attention and Feed-Forward Design?
 
 ![pfa (1)](https://github.com/luffycodes/Parallel-Transformers-Pytorch/assets/22951144/e5b76b1c-5fb1-4263-a23b-a61742fe12ae)
