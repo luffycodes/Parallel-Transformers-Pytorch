@@ -295,7 +295,7 @@ class RobertaSelfOutput(nn.Module):
     def forward(self, hidden_states: torch.Tensor, input_tensor: torch.Tensor) -> torch.Tensor:
         hidden_states = self.dense(hidden_states)
         hidden_states = self.dropout(hidden_states)
-        #hidden_states = self.LayerNorm(hidden_states + input_tensor)
+        hidden_states = self.LayerNorm(hidden_states + input_tensor)
         return hidden_states
 
 
@@ -373,10 +373,10 @@ class RobertaOutput(nn.Module):
         self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
-    def forward(self, hidden_states: torch.Tensor, input_tensor: torch.Tensor, hidden_states_orig: torch.Tensor) -> torch.Tensor:
+    def forward(self, hidden_states: torch.Tensor, input_tensor: torch.Tensor) -> torch.Tensor:
         hidden_states = self.dense(hidden_states)
         hidden_states = self.dropout(hidden_states)
-        hidden_states = self.LayerNorm(hidden_states + input_tensor + hidden_states_orig)
+        hidden_states = self.LayerNorm(hidden_states + input_tensor)
         return hidden_states
 
 
@@ -451,7 +451,7 @@ class RobertaLayer(nn.Module):
             present_key_value = present_key_value + cross_attn_present_key_value
 
         layer_output = apply_chunking_to_forward(
-            self.feed_forward_chunk, self.chunk_size_feed_forward, self.seq_len_dim, attention_output, hidden_states
+            self.feed_forward_chunk, self.chunk_size_feed_forward, self.seq_len_dim, attention_output
         )
         outputs = (layer_output,) + outputs
 
@@ -461,9 +461,9 @@ class RobertaLayer(nn.Module):
 
         return outputs
 
-    def feed_forward_chunk(self, attention_output, hidden_states):
-        intermediate_output = self.intermediate(hidden_states)
-        layer_output = self.output(intermediate_output, attention_output, hidden_states)
+    def feed_forward_chunk(self, attention_output):
+        intermediate_output = self.intermediate(attention_output)
+        layer_output = self.output(intermediate_output, attention_output)
         return layer_output
 
 
