@@ -7,10 +7,12 @@ To use this model, use the following [paf_modeling_roberta.py](https://github.co
 ## Here is how to use this model to get the features of a given text in PyTorch
 
 ```python
-from transformers import RobertaTokenizer
+# use paf_modeling_roberta.py instead of modeling_roberta
 from paf_modeling_roberta import RobertaModel
-tokenizer = RobertaTokenizer.from_pretrained('roberta-large')
+from transformers import RobertaTokenizer
+
 model = RobertaModel.from_pretrained('luffycodes/parallel-roberta-large')
+tokenizer = RobertaTokenizer.from_pretrained('roberta-large')
 text = "Replace me by any text you'd like."
 encoded_input = tokenizer(text, return_tensors='pt')
 output = model(**encoded_input)
