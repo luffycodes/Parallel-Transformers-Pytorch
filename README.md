@@ -1,6 +1,6 @@
 # Parallel Transformers Pytorch
 
-We provide the [weights](https://huggingface.co/luffycodes/Parallel-Roberta-Large) for the parallel attention and feedforward design for Roberta-Large.
+We provide the [weights](https://huggingface.co/luffycodes/parallel-roberta-large) for the parallel attention and feedforward design for Roberta-Large.
 
 To use this model, use the following [modeling_roberta.py](https://github.com/luffycodes/Parallel-Transformers-Pytorch/blob/main/paf_modeling_roberta.py) file.
 
